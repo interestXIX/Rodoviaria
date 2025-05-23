@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Administrador</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .action-button {
+      padding: 15px 30px;
+      background-color: #004a8d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .form-section {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      display: none;
+    }
+
+    .form-title {
+      color: #333;
+      border-bottom: 2px solid #004a8d;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .input-full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .radio-group, .checkbox-group {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .submit-button {
+      background-color: #003366;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <h1>Painel de cadastro</h1>
+  </header>
+
+  <div class="button-container">
+    <button class="action-button" onclick="showForm('onibus')">Cadastrar Ônibus</button>
+    <button class="action-button" onclick="showForm('motorista')">Cadastrar Motorista</button>
+  </div>
+
+  <!-- Formulário de Ônibus -->
+  <!-- Formulário de Ônibus -->
+<section id="form-onibus" class="form-section">
+  <h2 class="form-title">Cadastro de Ônibus</h2>
+  <form onsubmit="cadastrarOnibus(event)">
+    <div class="input-group">
+      <!-- Campos Básicos -->
+      <div>
+        <label>Marca do Veículo:</label>
+        <input type="text" name="marca" required>
+      </div>
+      <div>
+        <label>Modelo do Veículo:</label>
+        <input type="text" name="modelo" required>
+      </div>
+      <div>
+        <label>Ano de Fabricação:</label>
+        <input type="number" name="ano" min="1900" max="2099" required>
+      </div>
+      <div>
+        <label>Cor do Veículo:</label>
+        <input type="text" name="cor" required>
+      </div>
+
+      <!-- Documentação -->
+      <div>
+        <label>Placa:</label>
+        <input type="text" name="placa" pattern="[A-Za-z]{3}\d[A-Za-z]\d{2}" required>
+      </div>
+      <div>
+        <label>RENAVAM:</label>
+        <input type="text" name="renavam" required>
+      </div>
+      <div>
+        <label>Chassi:</label>
+        <input type="text" name="chassi" required>
+      </div>
+
+      <!-- Características Técnicas -->
+      <div>
+        <label>Número de Eixos:</label>
+        <input type="number" name="eixos" min="2" max="10" required>
+      </div>
+      <div class="input-full">
+        <label>Tipo de Combustível:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="combustivel" value="Diesel" required> Diesel</label>
+          <label><input type="radio" name="combustivel" value="GNV"> GNV</label>
+          <label><input type="radio" name="combustivel" value="Outro"> Outro</label>
+        </div>
+      </div>
+
+      <!-- Carroceria -->
+      <div class="input-full">
+        <label>Tipo de Carroceria:</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="carroceria" value="Comum"> Comum</label>
+          <label><input type="checkbox" name="carroceria" value="Leito"> Leito</label>
+          <label><input type="checkbox" name="carroceria" value="Executivo"> Executivo</label>
+          <label><input type="checkbox" name="carroceria" value="Double Deck"> Double Deck</label>
+          <label><input type="checkbox" name="carroceria" value="Outro"> Outro</label>
+        </div>
+      </div>
+
+      <!-- Documentos -->
+      <div>
+        <label>Número do CRLV:</label>
+        <input type="text" name="crlv" required>
+      </div>
+      <div>
+        <label>Validade do CRLV:</label>
+        <input type="date" name="validade_crlv" required>
+      </div>
+
+      <!-- Emplacamento -->
+      <div>
+        <label>Estado de Emplacamento:</label>
+        <input type="text" name="estado_emplacamento" required>
+      </div>
+      <div>
+        <label>Município de Emplacamento:</label>
+        <input type="text" name="municipio_emplacamento" required>
+      </div>
+
+      <!-- Manutenção -->
+      <div>
+        <label>Kilometragem Atual (km):</label>
+        <input type="number" name="km_atual" required>
+      </div>
+      <div>
+        <label>Data Última Revisão:</label>
+        <input type="date" name="ultima_revisao" required>
+      </div>
+      <div>
+        <label>KM Última Revisão:</label>
+        <input type="number" name="km_revisao" required>
+      </div>
+
+      <!-- Histórico -->
+      <div class="input-full">
+        <label>Histórico de Acidentes:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="acidentes" value="Sim" required> Sim</label>
+          <label><input type="radio" name="acidentes" value="Não"> Não</label>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="submit-button">Salvar Dados do Ônibus</button>
+  </form>
+</section>
+
+  <!-- Formulário de Motorista -->
+ <!-- Formulário de Motorista -->
+<section id="form-motorista" class="form-section">
+  <h2 class="form-title">Cadastro de Motorista</h2>
+  <form onsubmit="cadastrarMotorista(event)">
+    <div class="input-group">
+      <!-- Dados Pessoais -->
+      <div>
+        <label>Nome Completo:</label>
+        <input type="text" name="nome" required>
+      </div>
+      <div>
+        <label>Data de Nascimento:</label>
+        <input type="date" name="nascimento" required>
+      </div>
+      <div>
+        <label>CPF:</label>
+        <input type="text" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" required>
+      </div>
+      <div>
+        <label>Sexo:</label>
+        <select name="sexo" required>
+          <option value="">Selecione</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Feminino">Feminino</option>
+        </select>
+      </div>
+
+      <!-- CNH -->
+      <div>
+        <label>Nº da CNH:</label>
+        <input type="text" name="cnh_numero" required>
+      </div>
+      <div>
+        <label>Validade da CNH:</label>
+        <input type="date" name="cnh_validade" required>
+      </div>
+      <div>
+        <label>Categoria da CNH:</label>
+        <select name="cnh_categoria" required>
+          <option value="">Selecione</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="D/E">D/E</option>
+        </select>
+      </div>
+
+      <!-- Experiência -->
+      <div>
+        <label>Tempo de Experiência (anos):</label>
+        <input type="number" name="experiencia" min="0" required>
+      </div>
+      <div>
+        <label>Última Empresa:</label>
+        <input type="text" name="ultima_empresa">
+      </div>
+
+      <!-- Endereço -->
+      <div class="input-full">
+        <label>Endereço:</label>
+        <div class="input-group">
+          <div>
+            <input type="text" name="rua" placeholder="Rua" required>
+          </div>
+          <div>
+            <input type="number" name="numero" placeholder="Número" required>
+          </div>
+          <div>
+            <input type="text" name="complemento" placeholder="Complemento">
+          </div>
+          <div>
+            <input type="text" name="bairro" placeholder="Bairro" required>
+          </div>
+          <div>
+            <input type="text" name="cidade" placeholder="Cidade" required>
+          </div>
+          <div>
+            <input type="text" name="estado" placeholder="Estado" required>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="submit-button">Salvar Dados do Motorista</button>
+  </form>
+</section>
+
+  <script>
+    function showForm(tipo) {
+      document.querySelectorAll('.form-section').forEach(form => {
+        form.style.display = 'none';
+      });
+      document.getElementById(`form-${tipo}`).style.display = 'block';
+    }
+
+    function cadastrarOnibus(event) {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const dados = Object.fromEntries(formData.entries());
+      
+      const onibus = JSON.parse(localStorage.getItem('onibus') || '[]');
+      onibus.push(dados);
+      localStorage.setItem('onibus', JSON.stringify(onibus));
+      
+      alert('Ônibus cadastrado com sucesso!');
+      event.target.reset();
+    }
+
+    function cadastrarMotorista(event) {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const dados = Object.fromEntries(formData.entries());
+      
+      const motoristas = JSON.parse(localStorage.getItem('motoristas') || '[]');
+      motoristas.push(dados);
+      localStorage.setItem('motoristas', JSON.stringify(motoristas));
+      
+      alert('Motorista cadastrado com sucesso!');
+      event.target.reset();
+    }
+</script>
+</body>
+</html>
