@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Rodoviária</title>
+</head>
+<body>
+  <header class="main-header">
+    <h1>Busao</h1>
+  </header>
+
+  <!-- FORMULÁRIO DE LOGIN -->
+  <form class="form" id="loginForm">
+    <p class="title">Entrar</p>
+    <p class="subtitulo">Entre com sua conta ou crie uma</p>
+
+    <label>
+      <input id="email" type="email" class="input" placeholder="Digite seu Email" required>
+    </label>
+    <label>
+      <input id="senha" type="password" class="input" placeholder="Digite sua senha" required>
+    </label>
+
+    <button type="submit">Entrar</button>
+    <p class="signin">
+      Ainda não tem uma conta?
+      <a href="#" onclick="mostrarCadastro(event)">Crie</a>
+    </p>
+  </form>
+
+  <!-- FORMULÁRIO DE CADASTRO -->
+  <form class="form" id="cadastroForm" style="display: none;">
+    <p class="title">Criar conta</p>
+    <p class="subtitulo">Preencha todos os campos</p>
+
+    <label>
+      <input id="nomeCadastro" type="text" class="input" placeholder="Seu nome completo" required>
+    </label>
+    <label>
+      <input id="emailCadastro" type="email" class="input" placeholder="Digite seu Email" required>
+    </label>
+    <label>
+      <input id="senhaCadastro" type="password" class="input" placeholder="Crie uma senha" required>
+    </label>
+    <label>
+      <input id="confirmarSenha" type="password" class="input" placeholder="Confirme sua senha" required>
+      <span id="erroSenha" style="color: red; font-size: 0.9rem;"></span>
+    </label>
+
+    <button type="submit">Cadastrar</button>
+    <p class="signin">
+      Já tem uma conta?
+      <a href="#" onclick="mostrarLogin(event)">Entrar</a>
+    </p>
+  </form>
+
+  <script>
+    // Redirecionamento simulado no login
+   document.getElementById("loginForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const senha = document.getElementById("senha").value;
+
+  // Simulação de credenciais de administrador
+  if (email === "biribinha@busao.com" && senha === "naoaguentomaisessafaculdade") {
+    window.location.href = "cadastroMV.html";
+  } else {
+    window.location.href = "siterodoviaria.html";
+  }
+});
+
+    // Alterna visibilidade entre login e cadastro
+    function mostrarCadastro(event) {
+      event.preventDefault();
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("cadastroForm").style.display = "block";
+    }
+    function mostrarLogin(event) {
+      event.preventDefault();
+      document.getElementById("cadastroForm").style.display = "none";
+      document.getElementById("loginForm").style.display = "block";
+    }
+
+    // Verificação em tempo real de confirmação de senha
+    const senha = document.getElementById("senhaCadastro");
+    const confirmar = document.getElementById("confirmarSenha");
+    const erro = document.getElementById("erroSenha");
+
+    confirmar.addEventListener("input", () => {
+      if (senha.value !== confirmar.value) {
+        erro.textContent = "As senhas não coincidem.";
+      } else {
+        erro.textContent = "";
+      }
+    });
+
+    // Bloqueia envio do cadastro se as senhas não coincidirem
+    document.getElementById("cadastroForm").addEventListener("submit", function(e) {
+      if (senha.value !== confirmar.value) {
+        e.preventDefault();
+        erro.textContent = "As senhas não coincidem.";
+      } else {
+        e.preventDefault();
+        window.location.href = "siterodoviaria.html";
+      }
+    });
+  </script>
+</body>
+</html>
