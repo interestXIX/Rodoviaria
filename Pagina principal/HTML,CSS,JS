@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rodoviária Central</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    :root {
+        --primary-color: #004a8d;
+        --secondary-color: #003366;
+        --accent-color: #007bff;
+        --text-color: #333;
+        --light-gray: #f8f9fa;
+        --white: #ffffff;
+        --transition: all 0.3s ease;
+        
+    }
+
+    body {
+        background-color: var(--light-gray);
+        color: var(--text-color);
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .header {
+        background-color: var(--primary-color);
+        color: var(--white);
+        padding: 1.5rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        position: relative;
+        z-index: 1000;
+    }
+
+    .nav-menu {
+        background-color: var(--secondary-color);
+        padding: 1rem;
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .nav-menu a {
+        color: var(--white);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        transition: var(--transition);
+        position: relative;
+    }
+
+    .nav-menu a:hover {
+        background-color: rgba(255,255,255,0.1);
+    }
+
+    .main-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+        flex: 1;
+        width: 100%;
+    }
+
+    .search-form {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    input, select, button {
+        padding: 1rem;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: var(--transition);
+        width: 100%;
+    }
+
+    input:focus, select:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px rgba(0,123,255,0.25);
+    }
+
+    button {
+        background-color: var(--primary-color);
+        color: var(--white);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        grid-column: 1 / -1;
+    }
+
+    button:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-2px);
+    }
+
+    .promo-section {
+        margin-top: 3rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .promo-card {
+        background: var(--white);
+        border-radius: 10px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: var(--transition);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);     
+    backdrop-filter: blur(2px); /* Para combinar com o login */
+    background: rgba(255,255,255,0.9);
+
+    }
+
+    .promo-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    .footer {
+        background-color: var(--secondary-color);
+        color: var(--white);
+        padding: 2rem 1rem;
+        margin-top: auto;
+        text-align: center;
+    }
+
+    .footer .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .footer .social-links a {
+        color: var(--white);
+        text-decoration: none;
+        padding: 0.5rem;
+        transition: var(--transition);
+    }
+
+    .footer .social-links a:hover {
+        opacity: 0.8;
+        text-decoration: underline;
+    }
+
+    #resultadoBusca {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 10px;
+        margin-top: 2rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+        .nav-menu {
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .search-form {
+            padding: 1.5rem;
+        }
+
+        .main-container {
+            padding: 0 1rem;
+        }
+
+        button {
+            padding: 0.8rem;
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .header {
+            padding: 1rem;
+        }
+
+        .nav-menu a {
+            font-size: 0.9rem;
+        }
+
+        .promo-card {
+            padding: 1rem;
+        }
+    }
+
+    .payment-methods img {
+  margin: 0 0.5rem;
+  vertical-align: middle;
+  opacity: 0.8;
+  transition: opacity var(--transition);
+}
+.payment-methods img:hover {
+  opacity: 1;
+}
+
+
+</style>
+</head>
+<body>
+    <header class="header">
+        <h1>Busao</h1>
+    </header>
+
+    <nav class="nav-menu">
+        <a href="#horarios">Horários</a>
+        <a href="#passagens">Passagens</a>
+        <a href="#rotas">Rotas</a>
+        <a href="#informacoes">Informações</a>
+    </nav>
+
+    <main class="main-container">
+        <section class="search-box">
+            <h2>Encontre sua viagem</h2>
+            <form class="search-form" id="searchForm">
+                <div class="form-group">
+                    <label>Origem</label>
+                    <select id="origem" required>
+                        <option value="">Selecione</option>
+                        <option>Cuiabá</option>
+                        <option>Poconé</option>
+                        <option>Sinop</option>
+                        <option>Nova Mutum</option>
+                        <option>Sorriso</option>
+                        <option>Primavera</option>
+                        <option>Colider</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Destino</label>
+                    <select id="destino" required>
+                        <option value="">Selecione</option>
+                        <option>Cuiabá</option>
+                        <option>Poconé</option>
+                        <option>Sinop</option>
+                        <option>Nova Mutum</option>
+                        <option>Sorriso</option>
+                        <option>Primavera</option>
+                        <option>Colider</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Data</label>
+                    <input type="date" id="data" required>
+                </div>
+
+                <button type="submit">Buscar Passagens</button>
+            </form>
+        </section>
+
+        <section id="resultadoBusca" style="display: none; margin-top: 2rem;">
+  <h2>Resultados da Busca</h2>
+  <p id="infoBusca"></p>
+  <p>Preço médio: <strong>R$ 120,00</strong></p>
+  <p>Foram encontrados 5 horários disponiveis de embarque:<br>
+    <strong>19:00</strong><br>
+    <strong>20:00</strong><br>
+    <strong>21:00</strong><br>
+    <strong>22:00</strong><br>
+    <strong>23:00</strong></p>
+</section>
+
+<section id="cadastro" style="display: none; margin-top: 2rem; background: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+    <h2>Complete seu Cadastro</h2>
+    <p>Você escolheu o horário: <strong id="horarioCadastro"></strong></p>
+    <form id="formCadastro">
+        <div class="form-group">
+            <label>Nome Completo</label>
+            <input type="text" id="nome" required placeholder="Digite seu nome completo">
+        </div>
+        
+        <div class="form-group">
+            <label>CPF</label>
+            <input type="text" id="cpf" required placeholder="Digite seu CPF" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}">
+        </div>
+
+        <div class="form-group">
+            <label>E-mail</label>
+            <input type="email" id="email" required placeholder="seuemail@exemplo.com">
+        </div>
+
+        <div class="form-group">
+            <label>Telefone</label>
+            <input type="tel" id="telefone" required placeholder="(DDD) 9XXXX-XXXX">
+        </div>
+
+        <div class="form-group">
+            <label>Data de Nascimento</label>
+            <input type="date" id="nascimento" required>
+        </div>
+
+        <button type="submit">Continuar para Pagamento</button>
+    </form>
+</section>
+
+<section id="pagamento" style="display: none; margin-top: 2rem; background: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+    <h2>Pagamento</h2>
+    <p>Você escolheu o horário: <strong id="horarioSelecionado"></strong></p>
+    <form id="formPagamento">
+        <div class="form-group">
+            <label>Método de Pagamento</label>
+            <select id="metodoPagamento" required>
+                <option value="">Selecione</option>
+                <option value="cartao">Cartão de Crédito</option>
+                <option value="pix">PIX</option>
+            </select>
+        </div>
+        <div class="form-group" id="dadosCartao" style="display: none;">
+            <label>Número do Cartão</label>
+            <input type="text" placeholder="1234 5678 9012 3456">
+        </div>
+        <button type="submit">Finalizar Pagamento</button>
+    </form>
+</section>
+
+
+        <section class="promo-section">
+            <div class="promo-card">
+                <h3>Promoção do Dia</h3>
+                <p>Cuiabá - Sinop R$ 120,00</p>
+            </div>
+            <div class="promo-card">
+                <h3>Viagem com amigos</h3>
+                <p>viagem com 3 acompanhantes por apenas R$300</p>
+            </div>
+            <div class="promo-card">
+                <h3>Viagens nacionais</h3>
+                <p>Solicite seu orçamento</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2024 Rodoviária Central - Todos os direitos reservados</p>
+        <p>Contato: (65) 4002-8922 </p>
+        <div class="social-links">
+            <a href="#">Facebook</a> | 
+            <a href="https://www.instagram.com/biel_valeriozz/">Instagram</a> | 
+            <a href="#">Twitter</a>
+        </div>
+        <div class="payment-methods" aria-label="Métodos de pagamento aceitos" style="margin-top:1rem;">
+  <img src="icons/visa.svg" alt="Visa" width="40" height="24">
+  <img src="icons/mastercard.svg" alt="Mastercard" width="40" height="24">
+  <img src="icons/pix.svg" alt="Pix" width="40" height="24">
+</div>
+    </footer>
+
+
+<script>
+// Função simples de validação de CPF
+function validateCPF(cpf) {
+    cpf = cpf.replace(/[^\d]+/g,'');
+    return cpf.length === 11;
+}
+
+// Máscaras para os campos
+document.getElementById('cpf').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    e.target.value = value;
+});
+
+document.getElementById('telefone').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    value = value.replace(/(\d{2})(\d)/, '($1) $2');
+    value = value.replace(/(\d{5})(\d)/, '$1-$2');
+    e.target.value = value;
+});
+
+// Evento principal do formulário de busca
+document.getElementById('searchForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const origem = document.getElementById('origem').value;
+    const destino = document.getElementById('destino').value;
+    const data = document.getElementById('data').value;
+
+    if (origem && destino && data) {
+        const infoBusca = document.getElementById("infoBusca");
+        const resultado = document.getElementById("resultadoBusca");
+
+        infoBusca.textContent = `De ${origem} para ${destino} em ${data}`;
+        resultado.innerHTML = `
+            <h2>Resultados da Busca</h2>
+            <p id="infoBusca">${infoBusca.textContent}</p>
+            <p>Preço médio: <strong>R$ 120,00</strong></p>
+            <p>Foram encontrados 5 horários disponíveis de embarque:</p>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                ${["19:00","20:00","21:00","22:00","23:00"].map(h => `
+                    <button class="horario-btn" data-horario="${h}" style="padding: 0.5rem 1rem; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        ${h}
+                    </button>
+                `).join('')}
+            </div>
+        `;
+        resultado.style.display = "block";
+
+        // Evento para seleção de horário
+        document.querySelectorAll('.horario-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const horario = this.getAttribute('data-horario');
+                document.getElementById('horarioCadastro').textContent = horario;
+                document.getElementById('horarioSelecionado').textContent = horario;
+                resultado.style.display = 'none';
+                document.getElementById('cadastro').style.display = 'block';
+                window.scrollTo({ top: document.getElementById('cadastro').offsetTop, behavior: 'smooth' });
+            });
+        });
+    }
+});
+
+// Validação do formulário de cadastro
+document.getElementById('formCadastro').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Coletar dados do formulário
+    const userData = {
+        nome: document.getElementById('nome').value,
+        cpf: document.getElementById('cpf').value,
+        email: document.getElementById('email').value,
+        telefone: document.getElementById('telefone').value,
+        nascimento: document.getElementById('nascimento').value
+    };
+
+    // Validação básica
+    if (!validateCPF(userData.cpf.replace(/\D/g, ''))) {
+        alert('CPF inválido!');
+        return;
+    }
+
+    // Esconder cadastro e mostrar pagamento
+    document.getElementById('cadastro').style.display = 'none';
+    document.getElementById('pagamento').style.display = 'block';
+    window.scrollTo({ top: document.getElementById('pagamento').offsetTop, behavior: 'smooth' });
+});
+
+// Exibe campos extras se cartão for selecionado
+document.getElementById('metodoPagamento').addEventListener('change', function() {
+    const dadosCartao = document.getElementById('dadosCartao');
+    dadosCartao.style.display = this.value === 'cartao' ? 'block' : 'none';
+});
+
+// Captura envio do formulário de pagamento
+document.getElementById('formPagamento').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Pagamento efetuado com sucesso!');
+});
+</script>
+
+    
+</body>
+</html>
